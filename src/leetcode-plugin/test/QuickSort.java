@@ -1,4 +1,4 @@
-public class Test {
+public class QuickSort {
 
     public static void main(String[]args){
         int[] a = {7 , 8, 9, 10, 1, 20};
@@ -26,7 +26,7 @@ public class Test {
             }
         }
         swap(a, pointer, high);
-        return pointer + 1;
+        return pointer;
     }
 
     public static void swap(int[] a, int i, int j){
