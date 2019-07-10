@@ -42,37 +42,56 @@
 
 class Solution {
     public int[][] kClosest(int[][] points, int K) {
-        TreeSet<Point> sortedPoints=new TreeSet();
-        int[][] answer=new int[K][2];
-        Iterator iterator;
-        int count=0;
-        Point pointer;
-        for(int i=0; i < points.length; i++){
-            sortedPoints.add(new Point(points[i][0], points[i][1]));
+        Point[] distances = new Point[points.length];
+        for(int i = 0; i < points.length; i++){
+            distances[i] = new Point(points[i][0], points[i][1]);
         }
-        iterator = sortedPoints.iterator();
-        while(count < K && iterator.hasNext()){
-            pointer = (Point)iterator.next();
-            answer[count][0] = pointer.x;
-            answer[count][1] = pointer.y;
-            count++;
+        sortKElements(distances, 0, distances.length - 1, K);
+        for(int i = 0; i < K; i++){
+            points[i][0] = distances[i].x;
+            points[i][1] = distances[i].y;
         }
-        return answer;
+        return Arrays.copyOfRange(points, 0, K);
+    }
+
+    public void sortKElements(Point[] distances, int start, int end, int k){
+        if(start <= end) {
+            int middle = partition(distances, start, end);
+            if (middle < k) {
+                sortKElements(distances, middle + 1, end, k);
+            } else {
+                sortKElements(distances, start, middle - 1, k);
+            }
+        }
+    }
+
+    public int partition(Point[] distances, int start, int end){
+        double pivot = distances[end].distance;
+        int pointer = start;
+        for(int i = start; i < end; i++){
+            if(distances[i].distance < pivot){
+                swap(distances, i, pointer);
+                pointer++;
+            }
+        }
+        swap(distances, pointer, end);
+        return pointer;
+    }
+
+    public void swap(Point[] distance, int x, int y){
+        Point temp = distance[x];
+        distance[x] = distance[y];
+        distance[y] = temp;
     }
 }
 
-class Point implements Comparable<Point> {
-    int x;
-    int y;
+class Point{
+    int x, y;
     double distance;
+
     public Point(int x, int y){
         this.x = x;
         this.y = y;
         this.distance = x * x + y * y;
-    }
-
-    @Override
-    public int compareTo(Point b){
-        return this.distance < b.distance ? -1: 1;
     }
 }
