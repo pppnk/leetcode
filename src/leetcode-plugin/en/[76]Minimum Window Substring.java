@@ -14,8 +14,7 @@
 // If there is such window, you are guaranteed that there will always be only one unique minimum window in S. 
 // 
 //
-
-class Solution {
+class SolutionTwo {
     public String minWindow(String s, String t) {
         if(s.length() == 0 || t.length() == 0 || t.length() > s.length()){
             return "";
