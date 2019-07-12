@@ -56,12 +56,6 @@
 
 class Solution {
 
-    //Input: A = [0,6,5,2,2,5,1,9,4], L = 1, M = 2
-    public static void main(String[]args){
-        int[] A = {0,6,5,2,2,5,1,9,4};
-        maxSumTwoNoOverlap(A, 1, 2);
-    }
-
     public static int maxSumTwoNoOverlap(int[] A, int L, int M) {
         for (int i = 1; i < A.length; ++i)
             A[i] += A[i - 1];
